@@ -2,6 +2,7 @@ require('./config/config');
 
 const express = require('express');
 const mongoose = require('mongoose');
+const path = require('path');
 
 
 const app = express();
@@ -13,8 +14,18 @@ app.use(bodyParser.urlencoded({ extended: false }));
 // parse application/json
 app.use(bodyParser.json());
 
+//Habilitar la carpeta public
+console.log('public: ', path.resolve( __dirname, '../public'));
+
+//app.use(express.static(path.resolve( __dirname, '../public')));
+
+app.use(express.static(path.resolve(__dirname, './public')));
+
+
 //Configuracion global de rutas
 app.use(require('./routes/index'));
+
+
 
 
 mongoose.connect('mongodb://localhost:27017/cafe',(err,resp) => {
